@@ -317,32 +317,7 @@ class AutoRepoPushGUI:
         main = tk.Frame(self.root, bg=COLORS["bg"], padx=16, pady=12)
         main.pack(fill=tk.BOTH, expand=True)
 
-        # ════ 标题 ════
-        header = tk.Frame(main, bg=COLORS["bg"])
-        header.pack(fill=tk.X, pady=(0, 14))
-
-        # 图标 + 标题
-        title_frame = tk.Frame(header, bg=COLORS["bg"])
-        title_frame.pack(side=tk.LEFT)
-
-        if self.ICON_PATH.exists():
-            try:
-                self._icon_img = tk.PhotoImage(file=str(self.ICON_PATH))
-                # 缩放到 32x32
-                self._icon_label = tk.Label(title_frame, image=self._icon_img,
-                                            bg=COLORS["bg"])
-                self._icon_label.pack(side=tk.LEFT, padx=(0, 8))
-            except Exception:
-                pass
-
-        tk.Label(title_frame, text=self.APP_TITLE,
-                 font=("Segoe UI", 20, "bold"), bg=COLORS["bg"],
-                 fg=COLORS["text"]).pack(side=tk.LEFT)
-
-        tk.Label(title_frame, text=f"v{self.APP_VERSION}",
-                 font=("Segoe UI", 10), bg=COLORS["bg"],
-                 fg=COLORS["text_hint"]).pack(side=tk.LEFT, padx=(8, 0),
-                                              pady=(8, 0))
+        # （标题已由窗口标题栏显示，此处不再重复）
 
         # ════ 主体：左侧设置 + 右侧文件 ════
         body = tk.Frame(main, bg=COLORS["bg"])
@@ -519,20 +494,20 @@ class AutoRepoPushGUI:
                  bg=COLORS["bg"], fg=COLORS["text"]).pack(anchor="w", pady=(6, 3))
 
         self._log = scrolledtext.ScrolledText(
-            parent, font=("Consolas", 10), bg=COLORS["log_bg"],
-            fg=COLORS["log_fg"], insertbackground="white",
+            parent, font=("Consolas", 10), bg="#ffffff",
+            fg=COLORS["text"], insertbackground=COLORS["text"],
             relief=tk.FLAT, height=14, state=tk.DISABLED, wrap=tk.WORD,
             padx=10, pady=8,
         )
         self._log.pack(fill=tk.BOTH, expand=True)
 
-        self._log.tag_configure("info", foreground="#cdd6f4")
-        self._log.tag_configure("success", foreground="#a6e3a1")
-        self._log.tag_configure("error", foreground="#f38ba8")
-        self._log.tag_configure("warn", foreground="#f9e2af")
-        self._log.tag_configure("title", foreground="#89b4fa",
+        self._log.tag_configure("info", foreground="#374151")
+        self._log.tag_configure("success", foreground="#16a34a")
+        self._log.tag_configure("error", foreground="#dc2626")
+        self._log.tag_configure("warn", foreground="#d97706")
+        self._log.tag_configure("title", foreground="#2563eb",
                                 font=("Consolas", 10, "bold"))
-        self._log.tag_configure("dim", foreground="#6c7086")
+        self._log.tag_configure("dim", foreground="#9ca3af")
 
     # ── 窗口居中 ──────────────────────────────────────────────
 
