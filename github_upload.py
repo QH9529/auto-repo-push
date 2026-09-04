@@ -109,12 +109,15 @@ class SmartUpload:
     
     def _get_remote_url(self) -> str:
         """获取远程仓库URL"""
-        # 尝试检测是GitHub还是AtomGit
+        # 如果已经是完整URL（含http/https/git@），直接使用
+        if self.repo.startswith(("http://", "https://", "git@")):
+            return self.repo if self.repo.endswith(".git") else self.repo + ".git"
+
+        # owner/repo 格式 → 根据平台生成
         if "github.com" in self.repo.lower():
-            return f"git@github.com:{self.repo}.git"
+            return f"https://github.com/{self.repo}.git"
         else:
-            # 默认使用AtomGit
-            return f"git@atomgit.com:{self.repo}.git"
+            return f"https://atomgit.com/{self.repo}.git"
     
     def _run_git(self, args: List[str], cwd: Optional[Path] = None) -> Tuple[bool, str]:
         """运行git命令"""
@@ -374,12 +377,14 @@ logs/
             return False
         
         # 暂存文件
-        if not self._stage_files():
-            return False
+        has_changes = self._stage_files()
         
-        # 提交更改
-        if not self._commit_changes():
-            return False
+        # 提交更改（有变更才提交）
+        if has_changes:
+            if not self._commit_changes():
+                return False
+        else:
+            print("ℹ️  没有新变更，跳过提交")
         
         # 推送更改
         if not self._push_changes():
