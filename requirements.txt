@@ -1,0 +1,3 @@
+# Auto Repo Push 依赖
+# 该脚本仅使用Python标准库，无需额外依赖
+# Python 3.6+ 版本即可运行
