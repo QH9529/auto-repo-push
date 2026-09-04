@@ -56,6 +56,7 @@ class SmartUpload:
         max_delay: float = None,
         preview_only: bool = False,
         force: bool = False,
+        private: bool = False,
         branch: str = "main",
         message: str = "Auto upload"
     ):
@@ -66,6 +67,7 @@ class SmartUpload:
         self.max_delay = max_delay if max_delay else self.DEFAULT_DELAY_MAX
         self._preview_only = preview_only
         self.force = force
+        self.private = private
         self.branch = branch
         self.message = message
         
@@ -351,6 +353,7 @@ logs/
         print(f"🌿 分支: {self.branch}")
         print(f"💬 提交信息: {self.message}")
         print(f"🔒 安全模式: {'开启' if self.safe else '关闭'}")
+        print(f"👁️  可见性: {'私有' if self.private else '公开'}")
         print(f"👀 预览模式: {'开启' if self._preview_only else '关闭'}")
         print("=" * 60)
         
@@ -434,6 +437,12 @@ def main():
     )
     
     parser.add_argument(
+        "--private",
+        action="store_true",
+        help="创建私有仓库 (默认: 公开)"
+    )
+    
+    parser.add_argument(
         "--dry-run", "-n",
         action="store_true",
         help="预览模式，不实际执行"
@@ -460,6 +469,7 @@ def main():
         safe=not args.no_safe,
         preview_only=args.dry_run,
         force=args.force,
+        private=args.private,
         branch=args.branch,
         message=args.message
     )

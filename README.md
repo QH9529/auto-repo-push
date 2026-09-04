@@ -23,13 +23,17 @@ python github_upload.py --repo owner/repo --path ./source --message "上传源�
 - `--path`：源码路径（默认当前目录）
 - `--message`：提交信息（默认："Auto upload"）
 - `--branch`：分支名称（默认：main）
+- `--private`：创建私有仓库（默认：公开）
 - `--force`：强制推送
 - `--dry-run`：预览模式，不实际执行
 
 ### 示例
 ```bash
-# 上传当前目录
+# 上传当前目录（公开仓库）
 python github_upload.py --repo myuser/myproject
+
+# 上传到私有仓库
+python github_upload.py --repo myuser/myproject --private
 
 # 上传指定目录
 python github_upload.py --repo myuser/myproject --path /path/to/source
